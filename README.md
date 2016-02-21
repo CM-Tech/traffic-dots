@@ -9,5 +9,4 @@ Adapted from https://bl.ocks.org/mbostock/raw/3231298/
 3. Hold down the mouse and dots will be attracted to it
 
 ##TODO:
-* Make support for multiple screen types
 * Add in game options
