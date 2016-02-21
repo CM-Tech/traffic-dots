@@ -150,7 +150,7 @@
                 force.start();
                 force.resume();
             });
-            canvas.on("mouseout", function() {
+            canvas.on("mouseleave", function() {
                 var p1 = d3.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
