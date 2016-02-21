@@ -48,7 +48,7 @@
                     .attr("x2", j)
                     .attr("y2", Math.round(h / 20) * 20 - 10)
                     .style("stroke", "lightgrey")
-                    .style("stroke-width", 0.5);
+                    .style("stroke-width", 1);
             }
             for (var j = 10; j < h + 10; j += 20) {
                 svg.append("svg:line")
@@ -57,7 +57,7 @@
                     .attr("x2", w-10)
                     .attr("y2", j)
                     .style("stroke", "lightgrey")
-                    .style("stroke-width", 0.5);
+                    .style("stroke-width", 1);
             }
 
             svg.selectAll("circle")
