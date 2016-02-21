@@ -16,7 +16,7 @@
         <script type="text/javascript">
             var w = window.innerWidth,
                 h = window.innerHeight;
-
+            var pull = false;
             var nodes = d3.range((w / 20) * (h / 20) / 4).map(function() {
                 return {
                     radius: 10 + Math.random() * 2.5
@@ -119,24 +119,41 @@
                 var p1 = d3.svg.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
+                if (pull === false) {
+                    force = force.charge(function(d, i) {
+                        return i ? 0 : 0;
+                    })
+                } else {
+                    force = force.charge(function(d, i) {
+                        return i ? 0 : 5000;
+                    })
+                }
+                force.start();
                 force.resume();
             });
-            svg.on("mouseout", function() {
-                force = force.charge(function(d, i) {
-                    return i ? 0 : 0;
-                })
-            });
-svg.on("mousedown", function() {
+            svg.on("mousedown", function() {
                 var p1 = d3.svg.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
+                pull = true;
                 force = force.charge(function(d, i) {
                     return i ? 0 : 5000;
                 })
                 force.start();
                 force.resume();
             });
-           svg.on("mouseup", function() {
+            svg.on("mouseup", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                pull = false;
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 0;
+                })
+                force.start();
+                force.resume();
+            });
+            svg.on("mouseout", function() {
                 var p1 = d3.svg.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
@@ -146,6 +163,7 @@ svg.on("mousedown", function() {
                 force.start();
                 force.resume();
             });
+
             function collide(node) {
                 var r = node.radius + 16,
                     nx1 = node.x - r,
@@ -169,7 +187,7 @@ svg.on("mousedown", function() {
                     return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
                 };
             }
-            window.setInterval(brownian, 1);
+            window.setInterval(brownian, 10);
         </script>
     </body>
 
