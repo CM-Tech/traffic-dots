@@ -21,11 +21,11 @@
                 return {
                     radius: 10 + Math.random() * 2.5
                 };
-            }),
-                color = d3.scale.category10();
+            });
+            var color = d3.scale.category10();
 
             var force = d3.layout.force()
-                .gravity(.0)
+                .gravity(0.0)
                 .charge(function(d, i) {
                     return i ? 0 : 000;
                 })
@@ -41,14 +41,15 @@
             var svg = d3.select("#body").append("svg:svg")
                 .attr("width", w)
                 .attr("height", h);
+                
             for (var j = 10; j < w + 10; j += 20) {
                 svg.append("svg:line")
                     .attr("x1", j)
                     .attr("y1", 10)
                     .attr("x2", j)
                     .attr("y2", Math.round(h / 20) * 20 - 10)
-                    .style("stroke", "grey")
-                    .style("stroke-width", 1);
+                    .style("stroke", "lightgrey")
+                    .style("stroke-width", 0.5);
             }
             for (var j = 10; j < h + 10; j += 20) {
                 svg.append("svg:line")
@@ -56,8 +57,8 @@
                     .attr("y1", j)
                     .attr("x2", w-10)
                     .attr("y2", j)
-                    .style("stroke", "grey")
-                    .style("stroke-width", 1);
+                    .style("stroke", "lightgrey")
+                    .style("stroke-width", 0.5);
             }
 
             svg.selectAll("circle")
@@ -66,8 +67,9 @@
                 .attr("r", function(d) {
                     return d.radius - 2;
                 })
-                .style("fill", function(d, i) {
-                    return color("hsl(" + (i % 6) * 60 + ",70%,50%)");
+                .style("fill", function(d,e) {
+                    return color(e % 6);
+                    
                 });
 
             force.on("tick", function(e) {
@@ -115,6 +117,54 @@
                 }
                 force.resume();
             }
+            svg.on("mousemove", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                if (pull === false) {
+                    force = force.charge(function(d, i) {
+                        return i ? 0 : 0;
+                    })
+                } else {
+                    force = force.charge(function(d, i) {
+                        return i ? 0 : 5000;
+                    })
+                }
+                force.start();
+                force.resume();
+            });
+            svg.on("mousedown", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                pull = true;
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 5000;
+                })
+                force.start();
+                force.resume();
+            });
+            svg.on("mouseup", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                pull = false;
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 0;
+                })
+                force.start();
+                force.resume();
+            });
+            svg.on("mouseout", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 0;
+                })
+                force.start();
+                force.resume();
+            });
             svg.on("mousemove", function() {
                 var p1 = d3.svg.mouse(this);
                 root.px = p1[0];
