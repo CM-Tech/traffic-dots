@@ -9,6 +9,9 @@ body {
     font-size: 14px;
     font-family:"Helvetica Neue", Helvetica;
 }
+body.white{
+  background:white;
+}
 rect {
     fill: none;
     pointer-events: all;
