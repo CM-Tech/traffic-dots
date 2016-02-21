@@ -94,17 +94,14 @@
                     n = nodes.length;
 
                 while (++i < n) {
-                    //nodes[i].x=nodes[i].x+Math.random()*1-0.5;
                     nodes[i].x = Math.max(Math.min(nodes[i].x, w - 10), 10);
                     nodes[i].y = Math.max(Math.min(nodes[i].y, h - 10), 10);
                     nodes[i].x = nodes[i].x / 100 * 95 + (Math.round(nodes[i].x / 20 + 0.5) * 20 - 10) / 100 * 5;
                     nodes[i].y = nodes[i].y / 100 * 95 + (Math.round(nodes[i].y / 20 + 0.5) * 20 - 10) / 100 * 5;
                     if (Math.random() < 0.001) {
-                        //console.log(nodes[i].vx);
                         nodes[i].vx = Math.random() < 0.5 ? 1 : -1;
                     }
                     if (Math.random() < 0.001) {
-                        //console.log(nodes[i].vx);
                         nodes[i].vy = Math.random() < 0.5 ? 1 : -1;
                     }
                     if (nodes[i].vx) {
@@ -115,8 +112,6 @@
                         nodes[i].y = nodes[i].y + nodes[i].vy;
                         nodes[i].vy = nodes[i].vy * 0.9;
                     }
-
-                    //q.visit(collide(nodes[i]));
                 }
                 force.resume();
             }
@@ -130,7 +125,6 @@
                 force = force.charge(function(d, i) {
                     return i ? 0 : 0;
                 })
-                console.log("left")
             });
 
             function collide(node) {
