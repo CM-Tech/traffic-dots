@@ -122,7 +122,6 @@
                 var p1 = d3.svg.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
-                console.log(pull)
                 if (pull === false) {
                     force = force.charge(function(d, i) {
                         return i ? 0 : 0;
@@ -132,9 +131,7 @@
                     force = force.charge(function(d, i) {
                         return i ? 0 : 5000;
                     });
-                    console.log("works")
                 }
-                console.log(pull)
                 force.start();
                 force.resume();
             });
@@ -171,7 +168,6 @@
                 })
                 force.start();
                 force.resume();
-                console.log("wo")
             });
 
             function collide(node) {
