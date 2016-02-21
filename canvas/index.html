@@ -85,7 +85,7 @@
                 }
             });
 
-            function brownian() {
+             function brownian() {
                 var i = 0,
                     n = nodes.length;
 
@@ -154,6 +154,7 @@
                 var p1 = d3.mouse(this);
                 root.px = p1[0];
                 root.py = p1[1];
+                pull=false;
                 force = force.charge(function(d, i) {
                     return i ? 0 : 0;
                 })
