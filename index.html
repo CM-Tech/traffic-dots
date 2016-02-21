@@ -126,7 +126,26 @@
                     return i ? 0 : 0;
                 })
             });
-
+svg.on("mousedown", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 5000;
+                })
+                force.start();
+                force.resume();
+            });
+           svg.on("mouseup", function() {
+                var p1 = d3.svg.mouse(this);
+                root.px = p1[0];
+                root.py = p1[1];
+                force = force.charge(function(d, i) {
+                    return i ? 0 : 0;
+                })
+                force.start();
+                force.resume();
+            });
             function collide(node) {
                 var r = node.radius + 16,
                     nx1 = node.x - r,
