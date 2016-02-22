@@ -1,6 +1,13 @@
+div.well {
+    position:absolute;
+    padding:5px;
+    margin-bottom:0;
+    width: calc( 100% );
+    background: rgba(255,255,255,.5);
+}
 circle {
-  stroke: #000;
-  stroke-opacity: .0;
+    stroke: #000;
+    stroke-opacity: .0;
 }
 body {
     background: black;
@@ -9,8 +16,8 @@ body {
     font-size: 14px;
     font-family:"Helvetica Neue", Helvetica;
 }
-body.white{
-  background:white;
+body.white {
+    background:white;
 }
 rect {
     fill: none;
