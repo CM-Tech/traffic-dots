@@ -1,0 +1,22 @@
+html {
+    height:100%;
+    margin:0;
+    padding:0;
+    border:0;
+}
+body {
+    background: black;
+    overflow: hidden;
+    margin: 0;
+    height:100%;
+}
+body.white {
+    background:white;
+}
+div.well {
+    position:absolute;
+    padding:5px;
+    margin-bottom:0;
+    width: calc(100%);
+    background: rgba(255, 255, 255, .5);
+}
