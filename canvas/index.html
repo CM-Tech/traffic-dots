@@ -11,7 +11,8 @@
 
     <body class="white">
         <div class="well">
-            <button class="btn btn-primary" onclick="document.body.classList.toggle('white')" style="left:10px;top:5px;height:30; padding:5px">Toggle Theme</button>
+            <button class="btn btn-primary" onclick="document.body.classList.toggle('white');twhite()" style="left:10px;top:5px;height:30; padding:5px">Toggle Theme</button>
+            <button class="btn btn-primary" onclick="tblur()" style="left:10px;top:5px;height:30; padding:5px">Toggle Blur</button>
             <input type="range" id="slider" max="5000" min="-5000" value="5000" step="500" style="display:initial;margin:0;width:400px">
         </div>
         <script src="main.js">
