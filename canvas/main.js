@@ -2,11 +2,14 @@ var w = window.innerWidth,
     h = window.innerHeight;
 var slider = document.getElementById("slider");
 var pull = false;
+var blur = false;
+var white = true;
 var nodes = d3.range((w / 20) * (h / 20) / 4).map(function() {
     return {
         radius: 10 + Math.random() * 2.5
     };
 });
+var colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 var colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 var force = d3.layout.force()
     .gravity(0)
@@ -20,18 +23,19 @@ root.radius = 0;
 root.fixed = true;
 force.start();
 var canvas = d3.select("body")
-.append("canvas")
-.attr("width", w)
-.attr("height", h)
-.attr("position", "absolute")
-.attr("id","canvas");
+    .append("canvas")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("position", "absolute")
+    .attr("id", "canvas");
 var context = canvas.node().getContext("2d");
 force.on("tick", function(e) {
     var q = d3.geom.quadtree(nodes),
         i, d, n = nodes.length;
     for (i = 1; i < n;
         ++i) q.visit(collide(nodes[i]));
-    context.clearRect(0, 0, w, h);
+    blur===true?white === false ? context.fillStyle = "rgba(0,0,0,.1)" : context.fillStyle = "rgba(255,255,255,.1)":white === false ? context.fillStyle = "rgb(0,0,0)" : context.fillStyle = "rgb(255,255,255)";
+    context.fillRect(0, 0, w, h);
     context.strokeStyle = "lightgrey";
     context.lineWidth = 0.5;
     for (var j = 10; j < w + 10; j += 20) {
@@ -60,6 +64,7 @@ force.on("tick", function(e) {
 function brownian() {
     var i = 0,
         n = nodes.length;
+
     while (++i < n) {
         nodes[i].x = Math.max(Math.min(nodes[i].x, w - 10), 10);
         nodes[i].y = Math.max(Math.min(nodes[i].y, h - 10), 10);
@@ -131,7 +136,7 @@ canvas.on("mouseleave", function() {
     force.start();
     force.resume();
 });
-document.getElementById("canvas").onwheel = function(e){
+document.getElementById("canvas").onwheel = function(e) {
     e.preventDefault();
     var event = window.event || e;
     var delta = 0;
@@ -142,11 +147,18 @@ document.getElementById("canvas").onwheel = function(e){
         delta = e.wheelDelta || -e.detail;
     }
     delta = Math.max(-1, Math.min(1, (delta)));
-    slider.value -= (delta*500);
+    slider.value -= (delta * 500);
     console.log(delta);
 };
+function tblur() {
+    blur = ((blur == false) ? true : false)
+}
+
+function twhite() {
+    white = ((white == false) ? true : false)
+}
 function collide(node) {
-    var r = node.radius + 16,
+    var r = node.radius,
         nx1 = node.x - r,
         nx2 = node.x + r,
         ny1 = node.y - r,
