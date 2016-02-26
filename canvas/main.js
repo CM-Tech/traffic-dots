@@ -1,5 +1,6 @@
 var w = window.innerWidth,
     h = window.innerHeight;
+    
 var slider = document.getElementById("slider");
 var pull = false;
 var blur = false;
@@ -34,20 +35,21 @@ force.on("tick", function(e) {
         i, d, n = nodes.length;
     for (i = 1; i < n;
         ++i) q.visit(collide(nodes[i]));
-    blur===true?white === false ? context.fillStyle = "rgba(0,0,0,.1)" : context.fillStyle = "rgba(255,255,255,.1)":white === false ? context.fillStyle = "rgb(0,0,0)" : context.fillStyle = "rgb(255,255,255)";
+    blur === true ? white === false ? context.fillStyle = "rgba(0,0,0,.1)" : context.fillStyle = "rgba(255,255,255,.1)" : white === false ? context.fillStyle = "rgb(0,0,0)" : context.fillStyle = "rgb(255,255,255)";
     context.fillRect(0, 0, w, h);
-    context.strokeStyle = "lightgrey";
-    context.lineWidth = 0.5;
+    var brightness = 128 + (white ? 100 : -60);
+    context.strokeStyle = "rgb(" + brightness + "," + brightness + "," + brightness + ")";
+    context.lineWidth = 1;
     for (var j = 10; j < w + 10; j += 20) {
         context.beginPath();
-        context.moveTo(j, 10);
-        context.lineTo(j, Math.round(h / 20) * 20 - 10);
+        context.moveTo(j + 0.5, 10);
+        context.lineTo(j + 0.5, Math.round(h / 20) * 20 - 10);
         context.stroke();
     }
     for (var j = 10; j < h + 10; j += 20) {
         context.beginPath();
-        context.moveTo(10, j);
-        context.lineTo(w - 10, j);
+        context.moveTo(10, j + 0.5);
+        context.lineTo(w - 10, j + 0.5);
         context.stroke();
     }
     for (i = 1; i < n; ++i) {
@@ -150,6 +152,7 @@ document.getElementById("canvas").onwheel = function(e) {
     slider.value -= (delta * 500);
     console.log(delta);
 };
+
 function tblur() {
     blur = ((blur == false) ? true : false)
 }
@@ -157,6 +160,7 @@ function tblur() {
 function twhite() {
     white = ((white == false) ? true : false)
 }
+
 function collide(node) {
     var r = node.radius,
         nx1 = node.x - r,
