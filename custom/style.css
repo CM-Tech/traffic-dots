@@ -1,9 +1,14 @@
+html {
+    height:100%;
+    margin:0;
+    padding:0;
+    border:0;
+}
 body {
     background: black;
     overflow: hidden;
     margin: 0;
-    font-size: 14px;
-    font-family:"Helvetica Neue", Helvetica;
+    height:100%;
 }
 body.white {
     background:white;
