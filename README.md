@@ -1,7 +1,7 @@
 # Traffic-Dots
 Made with d3
 
-Adapted from https://bl.ocks.org/mbostock/raw/3231298/
+Adapted from https://bl.ocks.org/mbostock/3231307
 
 ##How to use:
 1. Go to http://modderme123.github.io/Traffic-Dots/canvas or http://modderme123.github.io/Traffic-Dots/custom
