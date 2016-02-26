@@ -38,16 +38,6 @@ var SPH = {
 };
 var blur = false;
 var white = true;
-/*$("body").keydown(function(event) {
-    if (event.which == 38) {
-        event.preventDefault();
-        SPH.RANGE = SPH.RANGE + 1;
-    }
-    if (event.which == 40) {
-        event.preventDefault();
-        SPH.RANGE--;
-    }
-});*/
 var currentCenter;
 
 function tblur() {
@@ -113,18 +103,21 @@ var initialize = (function() {
     function draw() {
         ctx.globalCompositeOperation = 'normal';
 
+        blur === true ? white === false ? ctx.fillStyle = "rgba(0,0,0,.1)" : ctx.fillStyle = "rgba(255,255,255,.1)" : white === false ? ctx.fillStyle = "rgb(0,0,0)" : ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillRect(0, 0, w, h);
+        var brightness = 128 + (white ? 100 : -60);
+        ctx.strokeStyle = "rgb(" + brightness + "," + brightness + "," + brightness + ")";
+        ctx.lineWidth = 1;
         for (var j = 10; j < w + 10; j += 20) {
             ctx.beginPath();
-            ctx.strokeStyle = "lightgrey";
-            ctx.moveTo(j, 10);
-            ctx.lineTo(j, Math.round(h / 20) * 20 - 10);
+            ctx.moveTo(j + 0.5, 10);
+            ctx.lineTo(j + 0.5, Math.round(h / 20) * 20 - 10);
             ctx.stroke();
         }
         for (var j = 10; j < h + 10; j += 20) {
             ctx.beginPath();
-            ctx.strokeStyle = "lightgrey";
-            ctx.moveTo(10, j);
-            ctx.lineTo(w - 10, j);
+            ctx.moveTo(10, j + 0.5);
+            ctx.lineTo(w - 10, j + 0.5);
             ctx.stroke();
         }
         for (var i = 0; i < numParticles; i++) {
