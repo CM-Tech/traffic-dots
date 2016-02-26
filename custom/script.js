@@ -37,6 +37,7 @@ var SPH = {
     VISCOSITY: 0.05
 };
 var blur = false;
+var white = true;
 /*$("body").keydown(function(event) {
     if (event.which == 38) {
         event.preventDefault();
@@ -48,8 +49,13 @@ var blur = false;
     }
 });*/
 var currentCenter;
-function tblur(){
+
+function tblur() {
     blur = ((blur == false) ? true : false)
+}
+
+function twhite() {
+    white = ((white == false) ? true : false)
 }
 var initialize = (function() {
     var col = 0;
@@ -85,8 +91,12 @@ var initialize = (function() {
         var tempDelta = delta + 0;
         delta = 0;
         //calc();
-        if(blur === false){
-        ctx.clearRect(0, 0, w, h);}
+        if (blur === false) {
+            ctx.clearRect(0, 0, w, h);
+        } else {
+            white === false ? ctx.fillStyle = "rgba(0,0,0,.1)" : ctx.fillStyle = "rgba(255,255,255,.1)";
+            ctx.fillRect(0, 0, w, h);
+        }
         draw();
         ctx2.clearRect(0, 0, w, h);
         $("#canvas").attr("width", $("body").width());
@@ -105,7 +115,7 @@ var initialize = (function() {
 
         for (var j = 10; j < w + 10; j += 20) {
             ctx.beginPath();
-            ctx.strokeStyle = "rgb(244,244,244)";
+            ctx.strokeStyle = "lightgrey";
             ctx.moveTo(j, 10);
             ctx.lineTo(j, Math.round(h / 20) * 20 - 10);
             ctx.stroke();
