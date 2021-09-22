@@ -78,7 +78,7 @@ function App() {
       }));
       (nodesRef.current[0] as d3.SimulationNodeDatum & { r: number }).r =
         20 * siz;
-      chargeRef.current = d3.forceManyBody().theta(1.0).strength(0);
+      chargeRef.current = d3.forceManyBody().strength(0);
       var simulation = d3
         .forceSimulation(nodesRef.current)
         .alphaDecay(0)
@@ -223,7 +223,7 @@ function App() {
       canvas.on("mousedown", () => {
         charged = true;
         chargeRef.current?.strength((_, i) =>
-          i == 0 ? sliderRef.current?.valueAsNumber ?? dV : 0
+          (i == 0 ? sliderRef.current?.valueAsNumber ?? dV : 0)*Math.pow(grd/20,2)
         );
       });
       canvas.on("mouseup", () => {
