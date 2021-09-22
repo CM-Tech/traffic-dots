@@ -1,120 +1,13 @@
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Traffic Dots</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        div.well {
-            position: absolute;
-            padding: 5px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.5);
-        }
-    </style>
-</head>
-
-<body>
-    <div class="well">
-        <button class="btn btn-primary" onclick="twhite()" style="left:10px;top:5px;padding:5px">Toggle Theme</button>
-        <button class="btn btn-primary" onclick="tblur()" style="left:10px;top:5px;padding:5px">Toggle Blur</button>
-        <input type="range" id="slider" max="200" min="-200" value="-200" step="10" style="margin:0;width:400px">
-    </div>
-    <script>
-        var width = window.innerWidth,
-            height = window.innerHeight;
-
-        var canvas = d3.select("body").append("canvas")
-            .attr("width", width)
-            .attr("height", height),
-            context = canvas.node().getContext("2d");
-
-        var blur = false,
-            white = true;
-
-        var nodes = d3.range(width * height / 1600).map((i) => ({
-            r: 8 + Math.random() * 2.5,
-            x: Math.random() * width,
-            y: Math.random() * height
-        }));
-        nodes[0].r = 20;
-        var charge = d3.forceManyBody().theta(0.8).strength(0);
-        var simulation = d3.forceSimulation(nodes)
-            .alphaDecay(0)
-            .velocityDecay(0.05)
-            .force("charge", charge)
-            .force("collide", d3.forceCollide().radius((d) => d.r + 2).iterations(10))
-            .on("tick", () => {
-                brownian();
-                context.fillStyle = blur === true ? white === false ? "rgba(0,0,0,.1)" : "rgba(255,255,255,.1)" : white === false ? "rgb(0,0,0)" : "rgb(255,255,255)";
-                context.fillRect(0, 0, width, height);
-                context.lineWidth = 1;
-                var brightness = 128 + (white ? 100 : -60);
-                context.strokeStyle = "rgb(" + brightness + "," + brightness + "," + brightness + ")";
-                for (var j = 10; j < width + 10; j += 20) {
-                    context.beginPath();
-                    context.moveTo(j + 0.5, 10);
-                    context.lineTo(j + 0.5, Math.round(height / 20) * 20 - 10);
-                    context.stroke();
-                }
-                for (var j = 10; j < height + 10; j += 20) {
-                    context.beginPath();
-                    context.moveTo(10, j + 0.5);
-                    context.lineTo(width - 10, j + 0.5);
-                    context.stroke();
-                }
-                nodes.slice(1).forEach((d, i) => {
-                    context.fillStyle = d3.schemeCategory10[i % 6];
-                    context.beginPath();
-                    context.moveTo(d.x + d.r, d.y);
-                    context.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
-                    context.fill();
-                });
-            });
-        function brownian() {
-            for (var i = 0; i < nodes.length; i++) {
-                nodes[i].x = Math.max(Math.min(nodes[i].x, width - 10), 10);
-                nodes[i].y = Math.max(Math.min(nodes[i].y, height - 10), 10);
-                nodes[i].x = nodes[i].x * 0.9 + (Math.round(nodes[i].x / 20 + 0.5) * 20 - 10) * 0.1;
-                nodes[i].y = nodes[i].y * 0.9 + (Math.round(nodes[i].y / 20 + 0.5) * 20 - 10) * 0.1;
-                if (Math.random() < 0.0015) {
-                    nodes[i].vx = Math.random() < 0.5 ? 5 : -5;
-                }
-                if (Math.random() < 0.0015) {
-                    nodes[i].vy = Math.random() < 0.5 ? 5 : -5;
-                }
-            }
-        }
-        canvas.on("mousemove", () => {
-            var p1 = d3.mouse(canvas.node());
-            nodes[0].fx = p1[0];
-            nodes[0].fy = p1[1];
-        });
-        var charged = false;
-        canvas.on("mousedown", () => {
-            charged = true;
-            charge.strength((_, i) => i == 0 ? slider.value : 0)
-        });
-        canvas.on("mouseup", () => {
-            charged = false;
-            charge.strength(0)
-        });
-        canvas.on("wheel", function () {
-            var delta = -window.event.deltaY;
-            slider.value -= Math.max(-1, Math.min(1, delta)) * 10;
-            if (charged) charge.strength((_, i) => i == 0 ? slider.value : 0);
-        });
-
-        function tblur() { blur = !blur; }
-        function twhite() { white = !white; }
-    </script>
-</body>
-
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
