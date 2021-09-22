@@ -114,14 +114,14 @@ function App() {
             "rgb(" + dbrightness + "," + dbrightness + "," + dbrightness + ")";
 
           for (var jg = grd / 2; jg < width + grd / 2; jg += grd) {
-            let j = Math.floor(jg);
+            let j = Math.floor(jg*dp)/dp;
             context.beginPath();
             context.moveTo(j + 0.5, grd / 2);
             context.lineTo(j + 0.5, Math.round(height / grd) * grd - grd / 2);
             context.stroke();
           }
           for (var jg = grd / 2; jg < height + grd / 2; jg += grd) {
-            let j = Math.floor(jg);
+            let j = Math.floor(jg*dp)/dp;
             context.beginPath();
             context.moveTo(grd / 2, j + 0.5);
             context.lineTo(width - grd / 2, j + 0.5);
@@ -130,7 +130,7 @@ function App() {
           context.strokeStyle =
             "rgb(" + brightness + "," + brightness + "," + brightness + ")";
           for (var jg = grd / 2; jg < width + grd / 2; jg += grd) {
-            let j = Math.floor(jg);
+            let j = Math.floor(jg*dp)/dp;
             context.beginPath();
             context.moveTo(j + 0.5 - 1, grd / 2);
             context.lineTo(
@@ -140,7 +140,7 @@ function App() {
             context.stroke();
           }
           for (var jg = grd / 2; jg < height + grd / 2; jg += grd) {
-            let j = Math.floor(jg);
+            let j = Math.floor(jg*dp)/dp;
             context.beginPath();
             context.moveTo(grd / 2, j + 0.5 - 1);
             context.lineTo(width - grd / 2, j + 0.5 - 1);
